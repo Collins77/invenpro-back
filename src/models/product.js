@@ -4,12 +4,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    category: {
-      type: DataTypes.STRING,
+    categoryId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    brand: {
-      type: DataTypes.STRING,
+    brandId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     sellingPrice: {
@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   });
+
+  Product.associate = (models) => {
+    Product.belongsTo(models.Category, { foreignKey: 'categoryId', as: 'category' });
+    Product.belongsTo(models.Brand, { foreignKey: 'brandId', as: 'brand' });
+  };
 
   return Product;
 };

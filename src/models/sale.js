@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     paymentType: {
-      type: DataTypes.ENUM("Cash", "Mpesa"),
+      type: DataTypes.ENUM("Cash", "MPESA"),
       allowNull: false,
     },
     customerType: {

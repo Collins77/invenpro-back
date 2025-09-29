@@ -22,6 +22,16 @@ db.Product = require('./product')(sequelize, Sequelize);
 db.Stock = require('./stock')(sequelize, Sequelize);
 db.Sale = require('./sale')(sequelize, Sequelize);
 db.SaleItem = require('./saleItem')(sequelize, Sequelize);
+db.Category = require('./category')(sequelize, Sequelize);
+db.Brand = require('./brand')(sequelize, Sequelize);
+db.User = require('./user')(sequelize, Sequelize); 
+
+// Associations for new models
+db.Category.hasMany(db.Product, { foreignKey: 'categoryId' });
+db.Product.belongsTo(db.Category, { foreignKey: 'categoryId' });
+
+db.Brand.hasMany(db.Product, { foreignKey: 'brandId' });
+db.Product.belongsTo(db.Brand, { foreignKey: 'brandId' });
 
 // Associations
 
@@ -38,3 +48,5 @@ db.Product.hasMany(db.SaleItem, { foreignKey: 'productId' });
 db.SaleItem.belongsTo(db.Product, { foreignKey: 'productId' });
 
 module.exports = db;
+
+
