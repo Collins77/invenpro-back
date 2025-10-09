@@ -14,7 +14,7 @@ const sendLowStockEmail = async (product) => {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_USER, // send to yourself for local setup
+      to: process.env.EMAIL_OWNER, // send to yourself for local setup
       subject: `Low Stock Alert - ${product.name}`,
       text: `Product ${product.name} is low in stock (${product.stock} units). Minimum required: ${product.minStock}`
     });

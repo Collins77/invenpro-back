@@ -12,7 +12,32 @@ const brandRoutes = require('./routes/brandRoutes');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
-app.use(cors());
+// CORS configuration
+// const allowedOrigins = [
+//   'http://localhost:5173',
+//   'http://localhost:3000',
+//   'https://invenpro.vercel.app', // Add your Vercel URL here after deployment
+// ];
+
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     // Allow requests with no origin (mobile apps, Postman, etc.)
+//     if (!origin) return callback(null, true);
+    
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: true
+// }));
+
+app.use(cors({
+  origin: '*', // We'll update this after deploying frontend
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
