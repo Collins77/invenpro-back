@@ -1,17 +1,32 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Initialize Sequelize
+const sequelize = isProduction
+  ? new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
-    logging: false
-  }
-);
+    protocol: 'postgres',
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // Required for Neon
+      },
+    },
+  })
+  : new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      dialect: 'postgres',
+      logging: false,
+    }
+  );
 
 const db = {};
 db.Sequelize = Sequelize;
@@ -24,7 +39,7 @@ db.Sale = require('./sale')(sequelize, Sequelize);
 db.SaleItem = require('./saleItem')(sequelize, Sequelize);
 db.Category = require('./category')(sequelize, Sequelize);
 db.Brand = require('./brand')(sequelize, Sequelize);
-db.User = require('./user')(sequelize, Sequelize); 
+db.User = require('./user')(sequelize, Sequelize);
 
 // Associations for new models
 db.Category.hasMany(db.Product, { foreignKey: 'categoryId' });
