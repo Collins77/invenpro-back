@@ -6,7 +6,7 @@ const cors = require('cors');
 // app.use(cors({ origin: 'http://localhost:5173' }));
 
 app.use(cors({
-  origin: 'https://invenpro-front.vercel.app/',
+  origin: 'https://invenpro-front.vercel.app',
   credentials: true
 }));
 
